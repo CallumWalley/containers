@@ -1,0 +1,12 @@
+Bootstrap: docker
+From: mingjiewang/qap
+
+%post
+
+chmod -R o+rx /opt/qap
+
+%environment
+    PATH=/opt/qap:/opt/qap/bin:$PATH
+
+%labels
+    Author Wes Harrell <wes.harrell@nesi.org.nz>
