@@ -1,0 +1,40 @@
+bootstrap:docker
+From: ubuntu:22.04
+
+%environment
+    PROJ_LIB=/opt/conda/env/deepseg/share/proj
+    CONDA_PREFIX=/opt/conda/envs/deepseg
+    GDAL_DATA=/opt/conda/envs/deepseg/share/gdal
+    LD_LIBRARY_PATH=/opt/conda/envs/deepseg/lib
+
+%post -c /bin/bash
+
+    apt-get update
+    apt-get install -y wget git
+
+    wget https://github.com/conda-forge/miniforge/releases/latest/download/Mambaforge-Linux-x86_64.sh
+    sh Mambaforge-Linux-x86_64.sh -b -p /opt/conda
+    rm Mambaforge-Linux-x86_64.sh
+
+    . /opt/conda/etc/profile.d/conda.sh && . /opt/conda/etc/profile.d/mamba.sh
+    mamba create -p /opt/conda/envs/deepseg python=3.8
+    mamba activate /opt/conda/envs/deepseg
+
+    # Install CUDA and cuDNN
+    mamba install cudatoolkit=11.3 cudnn=8.2 --quiet --yes
+    mamba install -c nvidia cuda-nvcc=11.3 --quiet --yes
+
+    mamba install gcc setuptools aiohttp attrs chardet pyyaml \
+        ipython geopandas rasterio tqdm ipdb rios gdal Pillow cython \
+        scikit-image imgaug pygeos seaborn --quiet --yes
+    
+    # Install PyTorch
+    mamba install pytorch=1.10.2 torchvision=0.11.3 -c pytorch --quiet --yes
+
+    # Install MMDETECTION
+    pip install mmcv-full -f https://download.openmmlab.com/mmcv/dist/cu113/torch1.10/index.html --quiet --progress-bar off
+    cd /opt && git clone https://github.com/open-mmlab/mmdetection.git
+    cd mmdetection && python setup.py develop
+
+%runscript
+    exec /bin/bash -c ". /opt/conda/etc/profile.d/conda.sh && . /opt/conda/etc/profile.d/mamba.sh && mamba activate deepseg && $@"
