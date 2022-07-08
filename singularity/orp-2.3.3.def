@@ -1,0 +1,47 @@
+Bootstrap: docker
+From: ubuntu:18.04
+
+%post
+export TERM=linux
+export DEBIAN_FRONTEND=noninteractive
+apt-get update && apt-get -y install build-essential autoconf git libxml2-dev libbz2-dev libz-dev sudo nano wget curl cmake liblzma-dev libopenmpi2
+
+cd /opt && git clone https://github.com/macmanes-lab/Oyster_River_Protocol.git orp
+
+cd orp
+git checkout 2.3.3 
+make
+
+sed -i "s_ubuntu_$(whoami)_g" /opt/orp/software/config.ini
+sed -i "s/\/envs\/busco\/scripts/\/envs\/orp\/bin/" /opt/orp/software/config.ini
+sed -i "s/\/busco\/scripts/\/envs\/orp\/bin/" /opt/orp/software/config.ini
+sed -i "s/home\/root\/Oyster_River_Protocol/opt\/orp/" /opt/orp/software/config.ini``
+
+%environment
+PATH=$PATH:/opt/orp/software/anaconda/install/bin
+PATH=$PATH:/opt/orp/software/OrthoFinder/
+PATH=$PATH:/opt/orp/software/orp-transrate
+PATH=$PATH:/opt/orp/software/transabyss
+PATH=$PATH:/opt/orp/software/SPAdes-3.15.2-Linux/bin/
+PATH=$PATH:/opt/openmpi-3.1.4/bin
+# add cluster slurm paths
+PATH=/opt/slurm/bin:/opt/slurm/sbin:$PATH
+LD_LIBRARY_PATH=/opt/slurm/lib64:/opt/slurm/lib64/slurm:/opt/openmpi-3.1.4/lib:$LD_LIBRARY_PATH
+export TRINITY_HOME=/opt/orp/software/trinityrnaseq-v2.12.0/
+PATH=$PATH:$TRINITY_HOME
+
+__conda_setup="$('/opt/orp/software/anaconda/install/bin/conda' 'shell.bash' 'hook' 2> /dev/null)"
+if [ $? -eq 0  ]; then
+    eval "$__conda_setup"
+else
+    if [ -f "/opt/orp/software/anaconda/install/etc/profile.d/conda.sh"  ]; then
+        . "/opt/orp/software/anaconda/install/etc/profile.d/conda.sh"
+    else
+        export PATH="/opt/orp/Oyster_River_Protocol/software/anaconda/install/bin:$PATH"
+    fi
+fi
+unset __conda_setup
+
+conda activate orp
+%labels
+    Author Wes Harrell <wes.harrell@nesi.org.nz>
