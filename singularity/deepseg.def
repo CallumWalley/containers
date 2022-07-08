@@ -7,6 +7,12 @@ From: ubuntu:22.04
     GDAL_DATA=/opt/conda/envs/deepseg/share/gdal
     LD_LIBRARY_PATH=/opt/conda/envs/deepseg/lib
 
+%setup
+    #NOTE: the following is required to workaround the fact that /run/shm
+    # does not exist in the container
+    # Optionally, the build/exec/run command can bind mount: -B /run/shm
+    mkdir -p -m 1777 ${SINGULARITY_ROOTFS}/run/shm
+
 %post -c /bin/bash
 
     apt-get update
