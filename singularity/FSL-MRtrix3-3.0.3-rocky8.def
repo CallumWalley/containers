@@ -17,10 +17,10 @@ From: ghcr.io/nesi/nesi-virtual-desktops/rocky8vdt:latest
     set +e
 
 
-    dnf -y install wget python2 sudo less vim libglu1-mesa-dev libglu1-mesa
-    dnf -y install libquadmath redhat-lsb-core
-    dnf -y install eigen3-devel zlib-devel
-    dnf -y install fftw-devel tiff5-devel libpng-dev
+    dnf -y install python2 cmake-gui
+    dnf -y install redhat-lsb-core
+    dnf -y install eigen3-devel
+    dnf -y install fftw-devel libtiff libpng-dev 
 
     # Install FSL - version 3.2.3 as of 2022-11-08
     wget https://fsl.fmrib.ox.ac.uk/fsldownloads/fslinstaller.py
