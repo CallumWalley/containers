@@ -3,14 +3,15 @@ on:
   push:
     paths:
       - "*.def"
+# Not very robust
 jobs:
-  changed:
-     uses: jitterbit/get-changed-files@v1
-  build:
-    strategy:
-        matrix:
-          image: ${{ changed.all }} 
-    uses: ./.github/workflows/build_containers.yml
-    with:
-        image-name: ${{ matrix.image }}
+  build-all:
+    runs-on: ubuntu-latest
+    steps:
+     - id: files
+       uses: jitterbit/get-changed-files@v1
+     - name: build
+       uses: ./.github/workflows/build_containers.yml
+       with:
+        image-name: ${{ files.all }}
 
