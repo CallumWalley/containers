@@ -1,6 +1,6 @@
 
-Bootstrap: docker
-From: ubuntu:20.04
+Bootstrap: oras
+From: ghcr.io/nesi/nesi-virtual-desktops/rocky8vdt:latest
 
 # Definition file for FSL
 
@@ -13,14 +13,15 @@ From: ubuntu:20.04
 %post
     export LC_ALL=C
     export TERM=linux
-    export DEBIAN_FRONTEND=noninteractive
-    apt -y update
-    apt -y upgrade
-    apt -y install wget python2 sudo less vim libglu1-mesa-dev libglu1-mesa
-    apt -y install libquadmath0 lsb-core zip unzip curl jq
-    apt -y  install git g++ python libeigen3-dev zlib1g-dev 
-    apt -y install libqt5opengl5-dev libqt5svg5-dev libgl1-mesa-dev 
-    apt -y install libfftw3-dev libtiff5-dev libpng-dev
+
+    set +e
+
+
+    dnf -y wget python2 sudo less vim libglu1-mesa-dev libglu1-mesa
+    dnf -y install libquadmath0 lsb-core zip unzip curl jq
+    dnf -y install git g++ python libeigen3-dev zlib1g-dev 
+    dnf -y install libqt5opengl5-dev libqt5svg5-dev libgl1-mesa-dev 
+    dnf -y install libfftw3-dev libtiff5-dev libpng-dev
 
     # Install FSL - version 3.2.3 as of 2022-11-08
     wget https://fsl.fmrib.ox.ac.uk/fsldownloads/fslinstaller.py
@@ -48,3 +49,5 @@ From: ubuntu:20.04
 
 %labels
     Author Wes Harrell <wes.harrell@nesi.org.nz>
+    Author cal
+
