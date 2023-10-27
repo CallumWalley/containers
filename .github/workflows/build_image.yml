@@ -27,7 +27,7 @@ jobs:
           sudo apt-get install -y ./${APPTAINER_SRC##*/}
       - uses: actions/checkout@v3
       - name: Build Container
-        working-directory: ./sif    
+        working-directory: ./singularity    
         run: |
            sudo apptainer build ${{ inputs.image-name }}.sif ${{ inputs.image-name }}.def
            echo ${{ secrets.GITHUB_TOKEN }} | singularity remote login -u ${{ secrets.GHCR_USERNAME }} --password-stdin oras://ghcr.io
