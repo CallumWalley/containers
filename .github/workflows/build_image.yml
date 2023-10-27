@@ -30,7 +30,7 @@ jobs:
         working-directory: ./sif    
         run: |
            nicename=${{ inputs.image-name }}
-           nicename=${nicename%.*}
-           sudo apptainer build ${nicename}.sif ${nicename}.def
+           echo ${nicename%.*}
+           sudo apptainer build ${nicename%.*}.sif ${nicename%.*}.def
            echo ${{ secrets.GITHUB_TOKEN }} | singularity remote login -u ${{ secrets.GHCR_USERNAME }} --password-stdin oras://ghcr.io
-           singularity push ${nicename}.sif "oras://ghcr.io/${GITHUB_REPOSITORY}/${nicename}:latest"
+           singularity push ${nicename%.*}.sif "oras://ghcr.io/${GITHUB_REPOSITORY}/${nicename%.*}:latest"
