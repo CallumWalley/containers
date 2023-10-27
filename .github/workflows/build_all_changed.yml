@@ -1,0 +1,16 @@
+name: Build changed images
+on:
+  push:
+    paths:
+      - "*.def"
+jobs:
+  changed:
+     uses: jitterbit/get-changed-files@v1
+  build:
+    strategy:
+        matrix:
+          image: ${{ changed.all }} 
+    uses: ./.github/workflows/build_containers.yml
+    with:
+        image-name: ${{ matrix.image }}
+
