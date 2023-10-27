@@ -29,6 +29,7 @@ jobs:
       - name: Build Container
         working-directory: ./sif    
         run: |
-           sudo apptainer build ${{ inputs.image-name }}.sif ${{ inputs.image-name }}.def
+           nicename=${${{ inputs.image-name }}##*/}
+           sudo apptainer build ${nicename}.sif ${nicename}.def
            echo ${{ secrets.GITHUB_TOKEN }} | singularity remote login -u ${{ secrets.GHCR_USERNAME }} --password-stdin oras://ghcr.io
-           singularity push ${{ inputs.image-name }}.sif "oras://ghcr.io/${GITHUB_REPOSITORY}/${{ inputs.image-name }}:latest"
+           singularity push ${nicename}.sif "oras://ghcr.io/${GITHUB_REPOSITORY}/${nicename}:latest"
