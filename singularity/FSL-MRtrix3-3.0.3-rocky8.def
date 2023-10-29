@@ -16,19 +16,18 @@ From: ghcr.io/nesi/nesi-virtual-desktops/rocky8vdt:latest
 
     set +e
 
-
     dnf -y install python2 cmake-gui
     dnf -y install redhat-lsb-core
     dnf -y install eigen3-devel
     dnf -y install fftw-devel libtiff libpng-dev 
 
     # Install FSL - version 3.2.3 as of 2022-11-08
-    wget https://fsl.fmrib.ox.ac.uk/fsldownloads/fslinstaller.py
+    wget -nv https://fsl.fmrib.ox.ac.uk/fsldownloads/fslinstaller.py
     python2 fslinstaller.py -d /usr/local/fsl 
 
     # Install MRtrix3
     cd /usr/local
-    wget https://github.com/MRtrix3/mrtrix3/archive/refs/tags/3.0.3.tar.gz
+    wget -nv https://github.com/MRtrix3/mrtrix3/archive/refs/tags/3.0.3.tar.gz
     tar xvf 3.0.3.tar.gz && cd mrtrix3-3.0.3
     ./configure && ./build
 
