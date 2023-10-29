@@ -19,7 +19,7 @@ From: ubuntu:20.04
     apt -y install libquadmath0 lsb-core zip unzip curl jq
 
     export LC_ALL=C
-    wget https://fsl.fmrib.ox.ac.uk/fsldownloads/fslinstaller.py
+    wget -nv https://fsl.fmrib.ox.ac.uk/fsldownloads/fslinstaller.py
     python2 fslinstaller.py -d /usr/local/fsl 
 
 %environment
