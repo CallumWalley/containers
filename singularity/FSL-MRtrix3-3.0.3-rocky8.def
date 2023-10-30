@@ -35,9 +35,9 @@ From: ghcr.io/nesi/nesi-virtual-desktops/rocky8vdt:latest
     # Trying a few things to get Qt working.
     # One of them should work.
 
-    #ln -s /bin/qmake-qt5 /bin/qmake
-    #ln -s /bin/rcc-qt5 /bin/rcc
-    #ln -s /bin/moc-qt5 /bin/moc
+    ln -s /bin/qmake-qt5 /bin/qmake
+    ln -s /bin/rcc-qt5 /bin/rcc
+    ln -s /bin/moc-qt5 /bin/moc
 
     #export QMAKE="/bin/qmake-qt5"
     #export MOC="/bin/rcc-qt5"
