@@ -16,10 +16,12 @@ From: ghcr.io/nesi/nesi-virtual-desktops/rocky8vdt:latest
 
     set +e
 
-    dnf -y install python2 cmake-gui
+    #dnf -y install python2 cmake-gui
     dnf -y install redhat-lsb-core
     dnf -y install eigen3-devel
     dnf -y install fftw-devel
+    dnf -y install git g++ python eigen3-devel zlib-devel libqt5-devel libgl1-mesa-dev fftw-devel libtiff-devel libpng-devel
+
 
     # Install FSL - version 3.2.3 as of 2022-11-08
     wget -nv https://fsl.fmrib.ox.ac.uk/fsldownloads/fslinstaller.py
@@ -33,13 +35,13 @@ From: ghcr.io/nesi/nesi-virtual-desktops/rocky8vdt:latest
     # Trying a few things to get Qt working.
     # One of them should work.
 
-    ln -s /bin/qmake-qt5 /bin/qmake
-    ln -s /bin/rcc-qt5 /bin/rcc
-    ln -s /bin/moc-qt5 /bin/moc
+    #ln -s /bin/qmake-qt5 /bin/qmake
+    #ln -s /bin/rcc-qt5 /bin/rcc
+    #ln -s /bin/moc-qt5 /bin/moc
 
-    export QMAKE="/bin/qmake-qt5"
-    export MOC="/bin/rcc-qt5"
-    export RCC="/bin/moc-qt5"
+    #export QMAKE="/bin/qmake-qt5"
+    #export MOC="/bin/rcc-qt5"
+    #export RCC="/bin/moc-qt5"
 
     ./configure && ./build
 
