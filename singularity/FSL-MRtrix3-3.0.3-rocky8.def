@@ -29,6 +29,7 @@ From: ghcr.io/nesi/nesi-virtual-desktops/rocky8vdt:latest
     cd /usr/local
     wget -nv https://github.com/MRtrix3/mrtrix3/archive/refs/tags/3.0.3.tar.gz
     tar xf 3.0.3.tar.gz && cd mrtrix3-3.0.3
+    which qmake
     ./configure && ./build
 
 
