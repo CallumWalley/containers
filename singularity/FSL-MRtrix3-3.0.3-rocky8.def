@@ -14,18 +14,13 @@ From: ghcr.io/nesi/nesi-virtual-desktops/rocky8vdt:latest
     export LC_ALL=C
     export TERM=linux
 
-    set +e
-
-    #dnf -y install python2 cmake-gui
     dnf -y install redhat-lsb-core
     dnf -y install eigen3-devel
     dnf -y install fftw-devel
-    dnf -y install git g++ python eigen3-devel zlib-devel libqt5-devel libgl1-mesa-dev fftw-devel libtiff-devel libpng-devel
-
 
     # Install FSL - version 3.2.3 as of 2022-11-08
     wget -nv https://fsl.fmrib.ox.ac.uk/fsldownloads/fslinstaller.py
-    python2 fslinstaller.py -d /usr/local/fsl  > /dev/null # Noisy install, no quiet flags.
+    python3 fslinstaller.py -d /usr/local/fsl  > /dev/null # Noisy install, no quiet flags.
 
     # Install MRtrix3
     cd /usr/local
@@ -39,6 +34,7 @@ From: ghcr.io/nesi/nesi-virtual-desktops/rocky8vdt:latest
     ln -s /bin/rcc-qt5 /bin/rcc
     ln -s /bin/moc-qt5 /bin/moc
 
+    # This isn't enough, path to qmake is hardcoded somewhere.
     #export QMAKE="/bin/qmake-qt5"
     #export MOC="/bin/rcc-qt5"
     #export RCC="/bin/moc-qt5"
