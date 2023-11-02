@@ -15,6 +15,9 @@ env:
   APPTAINER_SRC: "https://github.com/apptainer/apptainer/releases/download/v1.1.0-rc.2/apptainer_1.1.0-rc.2_amd64.deb"
 jobs:
   build:
+    permissions:
+      contents: read
+      packages: write
     runs-on: ubuntu-latest
     steps:
       - name: Install dependencies
